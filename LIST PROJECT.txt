@@ -1,0 +1,18 @@
+• Yang harus ada dalam program:
+a) kombinasi Array, Struct, pointer ok
+b) Sorting ok
+c) Searching
+d) kombinasi Stack & Queue
+• Point Tambahan : LinkedList
+
+========================================================
+
+"Antrian Gudang Distributor"
+        cout << "Pilihan:" << endl;
+        cout << "1. Masukkan Barang ke Antrian" << endl;
+        cout << "2. Keluarkan Barang dari Antrian" << endl;
+        cout << "3. List Jumlah Barang dalam Antrian" << endl;
+        cout << "4. Riwayat Barang Keluar" << endl;  // Menambahkan opsi untuk melihat riwayat barang keluar
+        cout << "5. Tutup Antrian" << endl;
+        cout << "6. Keluar dari Program" << endl;  // Menambahkan opsi untuk keluar dari program
+        cout << "Silahkan Pilih: ";
