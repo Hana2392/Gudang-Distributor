@@ -9,7 +9,7 @@ const int MAX = 100;
 // Menentukan lebar kolom
 const int noWidth = 3;
 const int namaBarangWidth = 25;   // Lebar kolom untuk nama barang
-const int stokWidth = 10;         // Lebar kolom untuk stok
+const int jumlahWidth = 10;       // Lebar kolom untuk jumlah
 const int tanggalMasukWidth = 15; // Lebar kolom untuk tanggal masuk
 
 // struct
@@ -17,7 +17,7 @@ struct Barang
 {
     string nama;
     int nomor;
-    int stok;
+    int jumlah;
     string tanggalMasuk;
 };
 
@@ -42,7 +42,7 @@ struct GudangDistributor
     {
         if (full())
         {
-            cout << "Antrian penuh. Tidak dapat menambahkan barang." << endl;
+            cout << "Gudang penuh. Tidak dapat menambahkan barang." << endl;
             return;
         }
 
@@ -62,14 +62,14 @@ struct GudangDistributor
             sleep(1);
         }
         cout << endl;
-        cout << "Barang dengan nama '" << item.nama << "' telah dimasukkan ke dalam antrian." << endl;
+        cout << "'" << item.nama << "' telah dimasukkan ke dalam Gudang." << endl;
     }
 
     void deQueue() // Keluarkan Barang dari Gudang
     {
         if (empty())
         {
-            cout << "Antrian kosong. Tidak dapat mengeluarkan barang." << endl;
+            cout << "Gudang kosong. Tidak dapat mengeluarkan barang." << endl;
             return;
         }
 
@@ -85,6 +85,7 @@ struct GudangDistributor
         }
 
         cout << "Nomor Barang : " << item.nomor << "\nNama Barang : " << item.nama << endl;
+        cout << item.nama << " Berhasil Dikeluarkan" << endl;
 
         // Tambahkan ke stack riwayat keluar
         if (topStack < MAX - 1)
@@ -101,42 +102,26 @@ struct GudangDistributor
     {
         if (empty())
         {
-            cout << "Antrian kosong." << endl;
+            cout << "Gudang kosong." << endl;
         }
         else
         {
-            system("cls");
-            // Sorting Bubble Sort secara ascending berdasarkan nama barang
-            for (int i = awal; i <= akhir; ++i)
-            {
-                for (int j = awal; j <= akhir - 1; ++j)
-                {
-                    if (antrian[j].nama > antrian[j + 1].nama)
-                    {
-                        Barang temp = antrian[j];
-                        antrian[j] = antrian[j + 1];
-                        antrian[j + 1] = temp;
-                    }
-                }
-            }
-
             // Tampilkan header
-            cout << "List Barang (asc):" << endl;
-            cout << string(noWidth + 1 + namaBarangWidth + 1 + stokWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
+            cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
             cout << "| " << left << setw(noWidth) << "NO"
                  << "| " << left << setw(namaBarangWidth) << "Nama Barang"
-                 << "| " << left << setw(stokWidth) << "Stok"
+                 << "| " << left << setw(jumlahWidth) << "Jumlah"
                  << "| " << left << setw(tanggalMasukWidth) << "Tanggal Masuk"
                  << "|" << endl;
 
             // Tampilkan data barang
             for (int i = awal; i <= akhir; ++i)
             {
-                cout << "| " << left << setw(noWidth) << i + 1 << "| " << left << setw(namaBarangWidth) << antrian[i].nama << "| " << left << setw(stokWidth) << antrian[i].stok << "| " << left << setw(tanggalMasukWidth) << antrian[i].tanggalMasuk << "|" << endl;
+                cout << "| " << left << setw(noWidth) << i + 1 << "| " << left << setw(namaBarangWidth) << antrian[i].nama << "| " << left << setw(jumlahWidth) << antrian[i].jumlah << "| " << left << setw(tanggalMasukWidth) << antrian[i].tanggalMasuk << "|" << endl;
             }
 
             // Tampilkan footer
-            cout << string(noWidth + 1 + namaBarangWidth + 1 + stokWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
+            cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
         }
     }
 
@@ -164,14 +149,47 @@ struct GudangDistributor
     {
         if (empty())
         {
-            lihatJumlahAntrian();
+            cout << "Gudang kosong." << endl;
         }
         else
         {
             string ulang;
             do
             {
-                lihatJumlahAntrian();
+                system("cls");
+                cout << "================ Pencarian Barang ================ \n"
+                     << endl;
+                cout << "List Barang (asc):" << endl;
+                // Sorting Bubble Sort secara ascending berdasarkan nama barang
+                for (int i = awal; i <= akhir; ++i)
+                {
+                    for (int j = awal; j <= akhir - 1; ++j)
+                    {
+                        if (antrian[j].nama > antrian[j + 1].nama)
+                        {
+                            Barang temp = antrian[j];
+                            antrian[j] = antrian[j + 1];
+                            antrian[j + 1] = temp;
+                        }
+                    }
+                }
+
+                // Tampilkan header
+                cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
+                cout << "| " << left << setw(noWidth) << "NO"
+                     << "| " << left << setw(namaBarangWidth) << "Nama Barang"
+                     << "| " << left << setw(jumlahWidth) << "Jumlah"
+                     << "| " << left << setw(tanggalMasukWidth) << "Tanggal Masuk"
+                     << "|" << endl;
+
+                // Tampilkan data barang
+                for (int i = awal; i <= akhir; ++i)
+                {
+                    cout << "| " << left << setw(noWidth) << i + 1 << "| " << left << setw(namaBarangWidth) << antrian[i].nama << "| " << left << setw(jumlahWidth) << antrian[i].jumlah << "| " << left << setw(tanggalMasukWidth) << antrian[i].tanggalMasuk << "|" << endl;
+                }
+
+                // Tampilkan footer
+                cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1 + tanggalMasukWidth + 1, '=') << endl;
 
                 // Metode Sentinel Searching
                 string keyword;
@@ -211,21 +229,21 @@ struct GudangDistributor
         {
             system("cls");
             cout << "Riwayat Barang Keluar:" << endl;
-            cout << string(noWidth + 1 + namaBarangWidth + 1 + stokWidth + 1, '=') << endl;
+            cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1, '=') << endl;
             cout << "| " << left << setw(noWidth) << "NO"
                  << "| " << left << setw(namaBarangWidth) << "Nama Barang"
-                 << "| " << left << setw(stokWidth) << "Stok"
+                 << "| " << left << setw(jumlahWidth) << "Jumlah"
                  << "|" << endl;
 
             // Menggunakan pointer untuk mengakses elemen-elemen array
             Barang *pointer = riwayatKeluar;
             for (int i = 0; i <= topStack; ++i)
             {
-                cout << "| " << left << setw(noWidth) << i + 1 << "| " << left << setw(namaBarangWidth) << pointer->nama << "| " << left << setw(stokWidth) << pointer->stok << "|" << endl;
+                cout << "| " << left << setw(noWidth) << i + 1 << "| " << left << setw(namaBarangWidth) << pointer->nama << "| " << left << setw(jumlahWidth) << pointer->jumlah << "|" << endl;
                 ++pointer;
             }
 
-            cout << string(noWidth + 1 + namaBarangWidth + 1 + stokWidth + 1, '=') << endl;
+            cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1, '=') << endl;
         }
         else
         {
@@ -238,7 +256,7 @@ struct GudangDistributor
         string pilihtutup;
         cout << "Apakah anda ingin menutup antrian? (y/t) :";
         cin >> pilihtutup;
-        if (pilihtutup == "t" || "T")
+        if (pilihtutup == "t" || pilihtutup == "T")
         {
             cout << "Batal menutup antrian" << endl;
         }
@@ -288,8 +306,8 @@ menu:
                  << endl;
             cout << "Masukkan Nama: ";
             cin >> item.nama;
-            cout << "Masukkan Stok: ";
-            cin >> item.stok;
+            cout << "Masukkan Jumlah: ";
+            cin >> item.jumlah;
             cout << "Masukkan Tanggal Masuk (format: DD/MM/YYYY): ";
             cin >> item.tanggalMasuk;
             item.nomor = nomorAntrian++;
@@ -338,9 +356,9 @@ menu:
             }
             cout << endl;
             system("cls");
-            cout << "================ Pencarian Barang ================ \n"
-                 << endl;
             antrianGudang.caribarang();
+            cout << "Kembali ke menu? (y) :";
+            cin >> kembali;
             goto menu;
             break;
         case 5:
@@ -376,15 +394,13 @@ menu:
         case 7:
             cout << "Keluar dari Program." << endl;
             cout << "================ TERIMA KASIH ================" << endl;
-            sleep(1);
             break;
         default:
             cout << "Pilihan tidak valid" << endl;
-            sleep(2.8);
+            sleep(2);
             goto menu;
         }
     } while (pilihan != 7);
 
     return 0;
 }
-
