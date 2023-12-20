@@ -86,7 +86,16 @@ struct GudangDistributor
 
         cout << "Nomor Barang : " << item.nomor << "\nNama Barang : " << item.nama << endl;
         cout << item.nama << " Berhasil Dikeluarkan" << endl;
-
+        
+		// Tambahkan ke stack riwayat keluar
+        if (topStack < MAX - 1)
+        {
+            riwayatKeluar[++topStack] = item;
+        }
+        else
+        {
+            cout << "Stack riwayat keluar penuh. Data tidak dapat ditambahkan." << endl;
+        }
     }
 
     void lihatJumlahAntrian() // List Barang dalam Gudang
