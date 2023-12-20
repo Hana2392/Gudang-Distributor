@@ -87,15 +87,6 @@ struct GudangDistributor
         cout << "Nomor Barang : " << item.nomor << "\nNama Barang : " << item.nama << endl;
         cout << item.nama << " Berhasil Dikeluarkan" << endl;
 
-        // Tambahkan ke stack riwayat keluar
-        if (topStack < MAX - 1)
-        {
-            riwayatKeluar[++topStack] = item;
-        }
-        else
-        {
-            cout << "Stack riwayat keluar penuh. Data tidak dapat ditambahkan." << endl;
-        }
     }
 
     void lihatJumlahAntrian() // List Barang dalam Gudang
@@ -223,6 +214,32 @@ struct GudangDistributor
         awal = akhir = -1;
         topStack = -1;
     }
+
+    void pop() // menghapus barang dari riwyat
+    {
+        if (topStack >= 0)
+        {
+            Barang *hapusbarang = &riwayatKeluar[topStack];
+            cout << "Apakah Anda ingin menghapus " << hapusbarang->nama << "? (y/n): ";
+            char pilih;
+            cin >> pilih;
+
+            if (pilih == 'y' || pilih == 'Y')
+            {
+                cout << "Menghapus " << hapusbarang->nama << " dari riwayat barang keluar." << endl;
+                --topStack;
+            }
+            else
+            {
+                cout << "Hapus barang dibatalkan." << endl;
+            }
+        }
+        else
+        {
+            cout << "Riwayat barang keluar kosong." << endl;
+        }
+    }
+
     void lihatRiwayatKeluar() // Riwayat Barang Keluar
     {
         if (topStack >= 0)
@@ -244,6 +261,9 @@ struct GudangDistributor
             }
 
             cout << string(noWidth + 1 + namaBarangWidth + 1 + jumlahWidth + 1, '=') << endl;
+
+            // Hapus barang dari riwayat pop dipanggil
+            pop();
         }
         else
         {
@@ -392,7 +412,7 @@ menu:
             goto menu;
             break;
         case 7:
-            cout << "Keluar dari Program." << endl;
+            cout << "Keluar dari Program.\n" << endl;
             cout << "================ TERIMA KASIH ================" << endl;
             break;
         default:
